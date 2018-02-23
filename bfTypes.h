@@ -58,7 +58,7 @@ void appendArray(exArray *target, int element) {
 // Pops the top off of the array
 int arrayPop(exArray *target) {
     if (target->used == 0) {
-        fprintf(stderr, "exArray is empty and cannot be popped");
+        fprintf(stderr, "exArray is empty and cannot be popped.\n");
         exit(-1);
     }
 
