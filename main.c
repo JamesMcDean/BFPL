@@ -110,11 +110,18 @@ int bfInit(bool e, char *out, exArray *prog) {
     initArray(jmp, DEFAULT_SIZE);
 
     for (int i = 0; i < prog->used; i++) {
-        if (getArray(prog, i) == '>')
-            ++ptr;
+        if (getArray(prog, i) == '>') {
+            if (++ptr >= tape + TAPE_LENGTH) {
+                fprintf(stderr, "Index greater than tape length: %i\n", TAPE_LENGTH);
+            }
+        }
 
-        else if (getArray(prog, i) == '<')
-            --ptr;
+        else if (getArray(prog, i) == '<') {
+            if (--ptr < tape) {
+                fprintf(stderr, "Negative tape index value.\n");
+                exit(1);
+            }
+        }
 
         else if (getArray(prog, i) == '+')
             ++*ptr;
@@ -138,21 +145,32 @@ int bfInit(bool e, char *out, exArray *prog) {
                 appendArray(jmp, i);
             }
             else {
-                int depth = 0;
-                for (int j = i; j < prog->used; j++) {
+                int depth = 0, j = i;
+                for (; j < prog->used; j++) {
                     if (getArray(prog, j) == '[')
                         depth++;
 
                     else if (getArray(prog, j) == ']')
                         if (--depth == 0) {
                             i = j;
-                            j = prog->used;
+                            j = prog->used + 1;
                         }
+                }
+
+                if (j == prog->used) {
+                    fprintf(stderr, "Unaccounted for start bracket: Command #%i\n",
+                            i + 1);
+                    exit(1);
                 }
             }
         }
 
         else if (getArray(prog, i) == ']') {
+            if (jmp->used == 0) {
+                fprintf(stderr, "Unaccounted for end bracket: Command #%i", i + 1);
+                exit(1);
+            }
+
             i = arrayPop(jmp) - 1;
         }
     }
