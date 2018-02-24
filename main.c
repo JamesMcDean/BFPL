@@ -15,11 +15,6 @@ int bfBegin(bool e, char *out, const char *in);
 int bfInit(bool e, char *out, exArray *prog);
 
 int main(int argc, const char *argv[]) {
-    /*if (argc == 1) {
-        fprintf(stderr, "Not enough arguments.\n");
-        return -1;
-    }*/
-
     // Options used throughout program
     bool encode = TRUE;
     char *outputPtr = NULL, *inputPtr = NULL;
