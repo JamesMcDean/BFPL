@@ -4,7 +4,7 @@
    Description:
         A Brainfuck (created by Urban Müller) interpreter written in C with
         simplicity and usability in mind. Licence included in repository.
- */
+*/
 
 #include "bfHead.h"
 
