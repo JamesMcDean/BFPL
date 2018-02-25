@@ -8,6 +8,6 @@ None.
 ```
 git clone "https://github.com/JamesMcDean/BFPL.git"
 cd BFPL/src
-gcc -o bf -O3 main.c
+gcc -o bf -O3 bf.c
 sudo mv bf /usr/bin/
 ```
