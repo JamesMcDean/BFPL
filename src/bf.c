@@ -19,7 +19,7 @@ int main(int argc, const char *argv[]) {
     bool encode = TRUE;
     char *outputPtr = NULL, *inputPtr = NULL;
 
-    // Parses options and argument
+    // Parses options and arguments
     for (int i = 1; i < argc; i++) {
         if ((strcmp(argv[i], "-h") == 0) || (strcmp(argv[i], "--help") == 0)) {
             printHelp();
