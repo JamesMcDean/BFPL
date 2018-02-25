@@ -7,7 +7,7 @@ None.
 # Installation Instructions
 ```
 git clone "https://github.com/JamesMcDean/BFPL.git"
-cd BFPL
+cd BFPL/src
 gcc -o bf -O3 main.c
 sudo mv bf /usr/bin/
 ```
