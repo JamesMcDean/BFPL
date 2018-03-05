@@ -120,9 +120,9 @@ int bfOut(char *tape, char *outputString) {
     for (int i = 0; i < TAPE_LENGTH / OUT_ROW_WIDTH; i++) {
         for (int j = 0; j < OUT_ROW_WIDTH; j++) {
             if (j == (OUT_ROW_WIDTH / 2) - 1)
-                fprintf(output, " --");
+                fprintf(output, "   --");
 
-            fprintf(output, " %i", tape[(i * OUT_ROW_WIDTH) + j]);
+            fprintf(output, " %3i", tape[(i * OUT_ROW_WIDTH) + j]);
         }
 
         fprintf(output, "\n");
