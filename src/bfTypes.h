@@ -36,7 +36,7 @@ void insertArray(exArray *target, size_t index, int element) {
     }
     else if (target->used == target->size) {
         target->size *= 2;
-        target->payload = (int *) realloc(target->payload, target->size * sizeof(int));
+        target->payload = (int *)realloc(target->payload, target->size * sizeof(int));
     }
     else if (index + 1 > target->used) {
         target->used = index + 1;
@@ -59,7 +59,7 @@ void appendArray(exArray *target, int element) {
 int arrayPop(exArray *target) {
     if (target->used == 0) {
         fprintf(stderr, "exArray is empty and cannot be popped.\n");
-        exit(-1);
+        exit(EXIT_FAILURE);
     }
 
     return target->payload[--target->used];
@@ -68,8 +68,12 @@ int arrayPop(exArray *target) {
 // Gets value from the array with some error logic
 int getArray(exArray *target, size_t index) {
     if (index >= target->used) {
-        fprintf(stderr, "exArray index out of bounds.\n");
+        fprintf(stderr, "exArray index out of top bounds.\n");
         return target->payload[target->used - 1];
+    }
+    else if (index < 0) {
+        fprintf(stderr, "exArray index out of bottom bounds.\n");
+        return target->payload[0];
     }
 
     return target->payload[index];

@@ -12,4 +12,4 @@
 #define DEFAULT_SIZE 10
 
 // Width of output
-#define OUT_ROW_WIDTH 20
+#define OUT_ROW_WIDTH 16
