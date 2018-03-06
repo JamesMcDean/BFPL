@@ -65,7 +65,7 @@ void printHelp() {
     printf("\t -h/--help\t: Print this help text.\n");
     printf("\t -n/--no-encode\t: No ASCII encoding on terminal output.\n");
     printf("\t -o/--output\t: Output the tape to a file.\n");
-    printf("\t -p\t: Persistent output (must have output set).");
+    printf("\t -p\t: Persistent output (must have output set). WARNING: SUPER SLOW!\n");
 }
 
 
@@ -110,16 +110,16 @@ void bfBegin(bool encoding, char *outputString, bool persistentOutput, const cha
 
 
 // Outputs tape to file
-int bfOut(char *tape, char *outputString) {
+int bfOut(char *tape, char *depth, char *outputString) {
     FILE *output = fopen(outputString, "w");
     if (!output) {
         fprintf(stderr, "General IO failure with output.");
         return EXIT_FAILURE;
     }
 
-    for (int i = 0; i < TAPE_LENGTH / OUT_ROW_WIDTH; i++) {
+    for (int i = 0; i < ((depth - tape) / OUT_ROW_WIDTH) + 1; i++) {
         for (int j = 0; j < OUT_ROW_WIDTH; j++) {
-            if (j == (OUT_ROW_WIDTH / 2) - 1)
+            if (j == (OUT_ROW_WIDTH / 2))
                 fprintf(output, "   --");
 
             fprintf(output, " %3i", tape[(i * OUT_ROW_WIDTH) + j]);
@@ -137,7 +137,7 @@ int bfOut(char *tape, char *outputString) {
 void bfInit(bool encoding, bool persistentOutput, char *outputString, exArray *program) {
     // Program memory
     char tape[TAPE_LENGTH] = {0};
-    char *ptr = tape;
+    char *ptr = tape, *maxDepth = tape;
 
     // Holds jumps for looping commands
     exArray *jmp = malloc(sizeof(exArray));
@@ -212,15 +212,18 @@ void bfInit(bool encoding, bool persistentOutput, char *outputString, exArray *p
 
             i = arrayPop(jmp) - 1;
         }
+        
+        if (ptr > maxDepth)
+            maxDepth = ptr;
 
         // Stops persistent output if failure occurs
         if ((!outFail) && (persistentOutput && outputString))
-            bfOut(tape, outputString);
+            bfOut(tape, maxDepth, outputString);
         else
             outFail = TRUE;
     }
 
     // Output for lack of persistent option
     if ((!persistentOutput) && outputString)
-        bfOut(tape, outputString);
+        bfOut(tape, maxDepth, outputString);
 }
