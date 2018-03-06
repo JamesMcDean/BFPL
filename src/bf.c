@@ -65,7 +65,7 @@ void printHelp() {
     printf("\t -h/--help\t: Print this help text.\n");
     printf("\t -n/--no-encode\t: No ASCII encoding on terminal output.\n");
     printf("\t -o/--output\t: Output the tape to a file.\n");
-    printf("\t -p\t: Persistent output (must have output set).");
+    printf("\t -p\t: Persistent output (must have output set). WARNING: SUPER SLOW!\n");
 }
 
 
